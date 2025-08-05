@@ -3,8 +3,13 @@ import Time "mo:base/Time";
 import Float "mo:base/Float";
 
 actor DBank {
-  stable var currentValue = 200;
-  // currentValue := 100;
+  stable var currentValue: Float = 200;
+  currentValue := 100;
+  Debug.print(debug_show(currentValue));
+
+  stable var startTime = Time.now();
+  startTime := Time.now();
+  Debug.print(debug_show(startTime));
 
   let id = 23432412545; //let like constant unchangable
 
@@ -15,7 +20,7 @@ actor DBank {
 
   public func withdraw(amount: Float){
     //? operator may trap inferred type Nat
-    let tempValue: Int = currentValue - amount;
+    let tempValue: Float = currentValue - amount;
     if (tempValue >= 0) {
     currentValue -= amount;
     Debug.print(debug_show(currentValue));
@@ -24,11 +29,7 @@ actor DBank {
     }
   };
 
-  // let startTime = func now() : Time;
-  // type Time = Int;
-  // func startTime() : Time
-  let currentTime = Time.now();
-  Debug.print(debug_show(startTime));
+
 
 
   //? MUST USE async
@@ -37,10 +38,10 @@ actor DBank {
   };
 
   public func compound(){
-    let currentTime = Time.now;
+    let currentTime = Time.now();
     let timeElapsedNS = currentTime - startTime;
     let timeElapsedS = timeElapsedNS / 1000000000;
-    currentValue := currentValue * (1.01 ** Float.formInt(timeElapsedS));
+    currentValue := currentValue * (1.01 ** Float.fromInt(timeElapsedS));
     startTime := currentTime;
   }
 }
